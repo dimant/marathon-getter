@@ -1,6 +1,7 @@
 var http = require('http');
 var async = require('async');
 var cheerio = require('cheerio');
+var json2csv = require('json2csv');
 
 var host_name = 'www.runraceresults.com';
 var event_id = 'RCLF2016';
@@ -42,7 +43,13 @@ function getAll() {
                 }
             });
         }
-        console.log(results);    
+        json2csv(
+            {
+                data: results, 
+                fields: Object.keys(results[0])
+            }, function(err, csv) {
+            console.log(csv);
+        });
     });
 
 }
